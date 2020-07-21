@@ -1,0 +1,47 @@
+{
+  "name": "template_back_node_eslint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:server": "node src/server.js",
+    "start:server:watch": "nodemon -e yaml,js,json src/server.js",
+    "migrate": "node node_modules/db-migrate/bin/db-migrate",
+    "migrate-up": "node node_modules/db-migrate/bin/db-migrate up:dev -e dev",
+    "migrate-down": "node node_modules/db-migrate/bin/db-migrate down:dev -e dev",
+    "migrate-up:test": "node node_modules/db-migrate/bin/db-migrate up:test -e test",
+    "migrate-down:test": "node node_modules/db-migrate/bin/db-migrate down:test -e test",
+    "start": "npm-run-all migrate-up start:server",
+    "start-watch": "npm-run-all migrate-up start:server:watch",
+    "lint": "npx eslint src/**",
+    "test": "env NODE_ENV=test jest --watchAll --detectOpenHandles --testTimeout=10000",
+    "pretest": "npm-run-all migrate-down:test migrate-up:test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "db-migrate-mysql": "^2.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "npm-run-all": "^4.1.5",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "db-migrate": "^0.11.11",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^26.0.1",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
+}
